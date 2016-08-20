@@ -14,10 +14,12 @@ First, you must have pip installed:
 sudo apt-get install python-pip
 ```
 
-Then execute:
+Install the prerequisites:
 ```
 sudo pip install -r requirements.txt
 ```
+
+[TODO: How install the whole application]
 
 ## 2. How to Run
 ```
@@ -26,4 +28,6 @@ python main.py
 The API will be running on http://127.0.0.1:5000/
 
 ## 3. How to Test
-[TODO]
+```
+nosetests
+```
