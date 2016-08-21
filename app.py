@@ -76,19 +76,32 @@ def delete_url(url_id):
         abort(404)
     return jsonify([])
 
-@app.route('/stats', methods=['GET'])
-def get_global_stats():
-    query = Query()
-    all_urls = get_table('urls').all()
-    total_hits = sum([x['hits'] for x in all_urls])
-    sorted_urls = sorted(all_urls, key=lambda url: url['hits'], reverse=True)
+def get_stats_for_urls(urls):
+    total_hits = sum([x['hits'] for x in urls])
+    sorted_urls = sorted(urls, key=lambda url: url['hits'], reverse=True)
     top10_urls = sorted_urls[0:10]
     [x.pop("userId") for x in top10_urls]
     result = {
         "hits": total_hits,
-        "urlCount": len(all_urls),
+        "urlCount": len(urls),
         "topUrls": top10_urls,
     }
+    return result
+
+@app.route('/stats', methods=['GET'])
+def get_global_stats():
+    all_urls = get_table('urls').all()
+    result = get_stats_for_urls(all_urls)
+    return jsonify(result)
+
+@app.route('/users/<string:user_id>/stats', methods=['GET'])
+def get_user_stats(user_id):
+    query = Query()
+    result = get_table('users').search(query.id == user_id)
+    if len(result) == 0:
+        abort(404)
+    urls = get_table('urls').search(query.userId == user_id)
+    result = get_stats_for_urls(urls)
     return jsonify(result)
 
 if __name__ == "__main__":

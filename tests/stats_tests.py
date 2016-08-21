@@ -39,6 +39,7 @@ class UserTests(unittest.TestCase):
         self.table_users.insert(user)
 
         self.top10 = []
+        self.maria_urls = []
         self.table_urls = app.config['DATABASE'].table('urls')
 
         url = {
@@ -62,6 +63,7 @@ class UserTests(unittest.TestCase):
         self.table_urls.insert(url)
         url.pop("userId")
         self.top10.append(url)
+        self.maria_urls.append(url)
 
         url = {
             "id": "24095",
@@ -83,7 +85,8 @@ class UserTests(unittest.TestCase):
         }
         self.table_urls.insert(url)
         url.pop("userId")
-        self.top10.append(url)      
+        self.top10.append(url)
+        self.maria_urls.append(url) 
 
         url = {
             "id": "23094",
@@ -95,6 +98,7 @@ class UserTests(unittest.TestCase):
         self.table_urls.insert(url)
         url.pop("userId")
         self.top10.append(url)
+        self.maria_urls.append(url)
 
         for count in range(10):
             url = {
@@ -137,6 +141,26 @@ class UserTests(unittest.TestCase):
             "topUrls": [],
         }
         self.assertEqual(json.loads(result.data), expected)
+
+    def test_get_user_stats_status(self):
+        result = self.client.get('/users/maria/stats')
+        self.assertEqual(result.status_code, 200)
+
+    def test_get_user_stats_that_doesnt_exist(self):
+        result = self.client.get('/users/papainoel/stats')
+        self.assertEqual(result.status_code, 404)
+
+    def test_get_user_stats_correct_hits(self):
+        result = self.client.get('/users/maria/stats')
+        self.assertEqual(json.loads(result.data)['hits'], 16)
+
+    def test_get_user_stats_correct_urlcount(self):
+        result = self.client.get('/users/maria/stats')
+        self.assertEqual(json.loads(result.data)['urlCount'], 3)
+
+    def test_get_user_stats_correct_topurls(self):
+        result = self.client.get('/users/maria/stats')
+        self.assertEqual(json.loads(result.data)['topUrls'], self.maria_urls)
 
 if __name__ == '__main__':
     unittest.main()
