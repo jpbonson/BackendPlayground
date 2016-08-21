@@ -36,7 +36,7 @@ class UserTests(unittest.TestCase):
         query = Query()
         self.assertEqual(self.table.search(query.id == 'maria'), [{'id': 'maria'}])
 
-    def test_users_status_code(self):
+    def test_users_status(self):
         result = self.client.get('/users')
         self.assertEqual(result.status_code, 200)
 
@@ -44,7 +44,11 @@ class UserTests(unittest.TestCase):
         result = self.client.get('/users')
         self.assertEqual(json.loads(result.data), [{'id': 'maria'}])
 
-    def test_get_user_that_exists(self):
+    def test_get_user_that_exists_status(self):
+        result = self.client.get('/users/maria')
+        self.assertEqual(result.status_code, 200)
+
+    def test_get_user_that_exists_data(self):
         result = self.client.get('/users/maria')
         self.assertEqual(json.loads(result.data), {'id': 'maria'})
 
