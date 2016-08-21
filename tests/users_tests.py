@@ -48,6 +48,10 @@ class UserTests(unittest.TestCase):
         result = self.client.get('/users/maria')
         self.assertEqual(json.loads(result.data), {'id': 'maria'})
 
+    def test_get_user_that_doesnt_exist(self):
+        result = self.client.get('/users/papainoel')
+        self.assertEqual(result.status_code, 404)
+
     def test_create_new_user_status(self):
         result = self.client.post('/users', 
             data=json.dumps({'id': 'roberto'}), 
