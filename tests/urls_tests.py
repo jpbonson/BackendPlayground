@@ -2,6 +2,7 @@ import unittest
 import json
 from app import app
 from tinydb import Query
+from flask import url_for
 import config
 
 class UserTests(unittest.TestCase): 
@@ -42,6 +43,30 @@ class UserTests(unittest.TestCase):
 
     def tearDown(self):
         pass
+
+    def test_redirect_v1_status(self):
+        result = self.client.get('/urls/23094')
+        self.assertEqual(result.status_code, 301)
+
+    def test_redirect_v2_status(self):
+        result = self.client.get('/23094')
+        self.assertEqual(result.status_code, 301)
+
+    def test_redirect_v1_for_invalid_url(self):
+        result = self.client.get('/urls/nothing')
+        self.assertEqual(result.status_code, 404)
+
+    def test_redirect_v2_for_invalid_url(self):
+        result = self.client.get('/nothing')
+        self.assertEqual(result.status_code, 404)
+
+    def test_redirect_v1_works(self):
+        result = self.client.get('/urls/23094')
+        self.assertEqual(result.location, "https://github.com/jpbonson/TestingStuff")
+
+    def test_redirect_v2_works(self):
+        result = self.client.get('/23094')
+        self.assertEqual(result.location, "https://github.com/jpbonson/TestingStuff")
 
     def test_create_new_url_status(self):
         result = self.client.post('/users/maria/urls', 

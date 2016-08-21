@@ -1,4 +1,4 @@
-from flask import Flask, jsonify, abort, request
+from flask import Flask, jsonify, abort, request, redirect
 from tinydb import Query, where
 import config
 
@@ -17,8 +17,7 @@ def get_users():
 
 @app.route('/users/<string:user_id>', methods=['GET'])
 def get_user(user_id):
-    query = Query()
-    result = get_table('users').search(query.id == user_id)
+    result = get_table('users').search(Query().id == user_id)
     if len(result) == 0:
         abort(404)
     return jsonify(result[0])
@@ -27,8 +26,7 @@ def get_user(user_id):
 def create_user():
     if not request.json or not 'id' in request.json:
         abort(400)
-    query = Query()
-    result = get_table('users').search(query.id == request.json['id'])
+    result = get_table('users').search(Query().id == request.json['id'])
     if len(result) > 0:
         abort(409)
     user = {
@@ -47,19 +45,38 @@ def delete_user(user_id):
 
 # URL ROUTES
 
+def redirect_url(url_id):
+    result = get_table('urls').search(Query().id == url_id)
+    if len(result) == 0:
+        abort(404)
+    url = result[0]["url"]
+    hits = result[0]["hits"] + 1
+    get_table('urls').update({'hits': hits}, Query().id == url_id)
+    return url
+
+@app.route('/urls/<string:url_id>')
+def redirect_url_v1(url_id):
+    url = redirect_url(url_id)
+    return redirect(url, code=301)
+
+@app.route('/<string:url_id>')
+def redirect_url_v2(url_id):
+    url = redirect_url(url_id)
+    return redirect(url, code=301)
+
 @app.route('/users/<string:user_id>/urls', methods=['POST'])
 def create_url(user_id):
     if not request.json or not 'url' in request.json:
         abort(400)
-    query = Query()
-    result = get_table('users').search(query.id == user_id)
+    result = get_table('users').search(Query().id == user_id)
     if len(result) == 0:
         abort(404)
+    url_id = "11111" # TODO
     url = {
-        "id": "23094", # TODO
-        "hits": 0, #TODO
+        "id": url_id,
+        "hits": 0,
         "url": request.json['url'],
-        "shortUrl": "http://"+request.host+"/"+"shorturl", #TODO
+        "shortUrl": "http://"+request.host+"/"+url_id,
         "userId": user_id
     }
     get_table('urls').insert(url)
@@ -90,8 +107,7 @@ def get_stats_for_urls(urls):
 
 @app.route('/stats/<string:url_id>', methods=['GET'])
 def get_url_stats(url_id):
-    query = Query()
-    result = get_table('urls').search(query.id == url_id)
+    result = get_table('urls').search(Query().id == url_id)
     if len(result) == 0:
         abort(404)
     result[0].pop("userId")
