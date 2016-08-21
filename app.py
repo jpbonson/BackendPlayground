@@ -41,6 +41,15 @@ def delete_user(user_id):
         abort(404)
     return jsonify({'result': True})
 
+@app.route('/stats/<string:url_id>', methods=['GET'])
+def get_url(url_id):
+    query = Query()
+    result = get_table('urls').search(query.id == url_id)
+    if len(result) == 0:
+        abort(404)
+    result[0].pop("userId")
+    return jsonify(result[0])
+
 @app.route('/users/<string:user_id>/urls', methods=['POST'])
 def create_url(user_id):
     if not request.json or not 'url' in request.json:
