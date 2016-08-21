@@ -76,5 +76,20 @@ def delete_url(url_id):
         abort(404)
     return jsonify([])
 
+@app.route('/stats', methods=['GET'])
+def get_global_stats():
+    query = Query()
+    all_urls = get_table('urls').all()
+    total_hits = sum([x['hits'] for x in all_urls])
+    sorted_urls = sorted(all_urls, key=lambda url: url['hits'], reverse=True)
+    top10_urls = sorted_urls[0:10]
+    [x.pop("userId") for x in top10_urls]
+    result = {
+        "hits": total_hits,
+        "urlCount": len(all_urls),
+        "topUrls": top10_urls,
+    }
+    return jsonify(result)
+
 if __name__ == "__main__":
     app.run()
