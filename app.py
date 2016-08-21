@@ -41,5 +41,24 @@ def delete_user(user_id):
         abort(404)
     return jsonify({'result': True})
 
+@app.route('/users/<string:user_id>/urls', methods=['POST'])
+def create_url(user_id):
+    if not request.json or not 'url' in request.json:
+        abort(400)
+    query = Query()
+    result = get_table('users').search(query.id == user_id)
+    if len(result) == 0:
+        abort(404)
+    url = {
+        "id": "23094", # TODO
+        "hits": 0, #TODO
+        "url": request.json['url'],
+        "shortUrl": "http://"+request.host+"/"+"shorturl", #TODO
+        "userId": user_id
+    }
+    get_table('urls').insert(url)
+    url.pop("userId")
+    return jsonify(url), 201
+
 if __name__ == "__main__":
     app.run()
