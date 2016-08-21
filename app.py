@@ -69,5 +69,12 @@ def create_url(user_id):
     url.pop("userId")
     return jsonify(url), 201
 
+@app.route('/urls/<string:url_id>', methods=['DELETE'])
+def delete_url(url_id):
+    result = get_table('urls').remove(where('id') == url_id)
+    if len(result) == 0:
+        abort(404)
+    return jsonify([])
+
 if __name__ == "__main__":
     app.run()

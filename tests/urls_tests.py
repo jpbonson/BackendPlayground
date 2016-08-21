@@ -100,5 +100,13 @@ class UserTests(unittest.TestCase):
             headers={"content-type": "application/json"})
         self.assertEqual(result.status_code, 400)
 
+    def test_remove_url(self):
+        result = self.client.delete('/urls/23094')
+        self.assertEqual(json.loads(result.data), [])
+
+    def test_try_remove_url_that_doesnt_exist(self):
+        result = self.client.delete('/urls/42')
+        self.assertEqual(result.status_code, 404)
+
 if __name__ == '__main__':
     unittest.main()
