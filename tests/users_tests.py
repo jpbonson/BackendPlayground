@@ -69,6 +69,12 @@ class UserTests(unittest.TestCase):
             headers={"content-type": "application/json"})
         self.assertEqual(json.loads(result.data), user)
 
+    def test_create_new_user_db(self):
+        result = self.client.post('/users', 
+            data=json.dumps({'id': 'roberto'}), 
+            headers={"content-type": "application/json"})
+        self.assertEqual(self.table.search(Query().id == 'roberto'), [{'id': 'roberto'}])
+
     def test_try_create_user_that_already_exists(self):
         result = self.client.post('/users', 
             data=json.dumps({'id': 'maria'}), 
@@ -84,6 +90,10 @@ class UserTests(unittest.TestCase):
     def test_remove_user(self):
         result = self.client.delete('/user/maria')
         self.assertEqual(json.loads(result.data), {'result': True})
+
+    def test_remove_user_db(self):
+        result = self.client.delete('/user/maria')
+        self.assertEqual(self.table.search(Query().id == 'maria'), [])
 
     def test_try_remove_user_that_doesnt_exist(self):
         result = self.client.delete('/user/papainoel')

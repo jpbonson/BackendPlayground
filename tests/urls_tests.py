@@ -88,6 +88,13 @@ class UserTests(unittest.TestCase):
             headers={"content-type": "application/json"})
         self.assertEqual(sorted(json.loads(result.data).keys()), ['hits', 'id', 'shortUrl', 'url'])
 
+    def test_create_new_url_db(self):
+        test_url = 'https://www.google.com.br/'
+        result = self.client.post('/users/maria/urls', 
+            data=json.dumps({'url': test_url}), 
+            headers={"content-type": "application/json"})
+        self.assertEqual(len(self.table_urls.search(Query().url == test_url)), 1)
+
     def test_try_create_url_for_invalid_user(self):
         result = self.client.post('/users/papainoel/urls', 
             data=json.dumps({'url': 'https://www.google.com.br/'}), 
@@ -103,6 +110,10 @@ class UserTests(unittest.TestCase):
     def test_remove_url(self):
         result = self.client.delete('/urls/23094')
         self.assertEqual(json.loads(result.data), [])
+
+    def test_remove_url_db(self):
+        result = self.client.delete('/urls/23094')
+        self.assertEqual(self.table_urls.search(Query().id == '23094'), [])
 
     def test_try_remove_url_that_doesnt_exist(self):
         result = self.client.delete('/urls/42')
