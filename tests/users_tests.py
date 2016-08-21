@@ -1,7 +1,7 @@
 import unittest
 import json
 from app import app
-from tinydb import TinyDB, Query
+from tinydb import Query
 import config
 
 class UserTests(unittest.TestCase): 

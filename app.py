@@ -1,5 +1,5 @@
-from flask import Flask, jsonify, abort, make_response, request
-from tinydb import TinyDB, Query, where
+from flask import Flask, jsonify, abort, request
+from tinydb import Query, where
 import config
 
 app = Flask(__name__)
