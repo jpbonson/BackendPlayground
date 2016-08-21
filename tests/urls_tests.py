@@ -68,6 +68,16 @@ class UserTests(unittest.TestCase):
         result = self.client.get('/23094')
         self.assertEqual(result.location, "https://github.com/jpbonson/TestingStuff")
 
+    def test_redirect_v1_increase_hits(self):
+        self.client.get('/urls/23094')
+        result = self.client.get('/stats/23094')
+        self.assertEqual(json.loads(result.data)['hits'], 1)
+
+    def test_redirect_v2_increase_hits(self):
+        self.client.get('/23094')
+        result = self.client.get('/stats/23094')
+        self.assertEqual(json.loads(result.data)['hits'], 1)
+
     def test_create_new_url_status(self):
         result = self.client.post('/users/maria/urls', 
             data=json.dumps({'url': 'https://www.google.com.br/'}), 
