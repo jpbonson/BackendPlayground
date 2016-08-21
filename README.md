@@ -23,9 +23,11 @@ sudo pip install -r requirements.txt
 
 ## 2. How to Run
 ```
-python main.py
+python app.py
 ```
 The API will be running on http://127.0.0.1:5000/
+
+[TODO: How run on different modes]
 
 ## 3. How to Test
 ```
