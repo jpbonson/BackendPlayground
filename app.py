@@ -39,7 +39,7 @@ def delete_user(user_id):
     result = get_table('users').remove(where('id') == user_id)
     if len(result) == 0:
         abort(404)
-    return jsonify({'result': True})
+    return jsonify([])
 
 @app.route('/stats/<string:url_id>', methods=['GET'])
 def get_url(url_id):

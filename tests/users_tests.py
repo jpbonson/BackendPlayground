@@ -89,7 +89,7 @@ class UserTests(unittest.TestCase):
 
     def test_remove_user(self):
         result = self.client.delete('/user/maria')
-        self.assertEqual(json.loads(result.data), {'result': True})
+        self.assertEqual(json.loads(result.data), [])
 
     def test_remove_user_db(self):
         result = self.client.delete('/user/maria')
