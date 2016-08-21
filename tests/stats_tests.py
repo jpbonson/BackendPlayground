@@ -116,6 +116,24 @@ class UserTests(unittest.TestCase):
     def tearDown(self):
         pass
 
+    def test_get_url_that_exists_status(self):
+        result = self.client.get('/stats/23094')
+        self.assertEqual(result.status_code, 200)
+
+    def test_get_url_that_exists_data(self):
+        result = self.client.get('/stats/23094')
+        url = {
+            "id": "23094",
+            "hits": 1,
+            "url": "blah1",
+            "shortUrl": "http://localhost:5000/blah1",
+        }
+        self.assertEqual(json.loads(result.data), url)
+
+    def test_get_url_that_doesnt_exist(self):
+        result = self.client.get('/stats/42')
+        self.assertEqual(result.status_code, 404)
+
     def test_get_global_stats_status(self):
         result = self.client.get('/stats')
         self.assertEqual(result.status_code, 200)

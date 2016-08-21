@@ -8,6 +8,9 @@ config.configure_app(app)
 def get_table(table_name):
     return app.config['DATABASE'].table(table_name)
 
+
+# USER ROUTES
+
 @app.route('/users', methods=['GET'])
 def get_users():
     return jsonify(get_table('users').all())
@@ -41,14 +44,8 @@ def delete_user(user_id):
         abort(404)
     return jsonify([])
 
-@app.route('/stats/<string:url_id>', methods=['GET'])
-def get_url(url_id):
-    query = Query()
-    result = get_table('urls').search(query.id == url_id)
-    if len(result) == 0:
-        abort(404)
-    result[0].pop("userId")
-    return jsonify(result[0])
+
+# URL ROUTES
 
 @app.route('/users/<string:user_id>/urls', methods=['POST'])
 def create_url(user_id):
@@ -76,6 +73,9 @@ def delete_url(url_id):
         abort(404)
     return jsonify([])
 
+
+# STATS ROUTES
+
 def get_stats_for_urls(urls):
     total_hits = sum([x['hits'] for x in urls])
     sorted_urls = sorted(urls, key=lambda url: url['hits'], reverse=True)
@@ -88,11 +88,14 @@ def get_stats_for_urls(urls):
     }
     return result
 
-@app.route('/stats', methods=['GET'])
-def get_global_stats():
-    all_urls = get_table('urls').all()
-    result = get_stats_for_urls(all_urls)
-    return jsonify(result)
+@app.route('/stats/<string:url_id>', methods=['GET'])
+def get_url_stats(url_id):
+    query = Query()
+    result = get_table('urls').search(query.id == url_id)
+    if len(result) == 0:
+        abort(404)
+    result[0].pop("userId")
+    return jsonify(result[0])
 
 @app.route('/users/<string:user_id>/stats', methods=['GET'])
 def get_user_stats(user_id):
@@ -102,6 +105,12 @@ def get_user_stats(user_id):
         abort(404)
     urls = get_table('urls').search(query.userId == user_id)
     result = get_stats_for_urls(urls)
+    return jsonify(result)
+
+@app.route('/stats', methods=['GET'])
+def get_global_stats():
+    all_urls = get_table('urls').all()
+    result = get_stats_for_urls(all_urls)
     return jsonify(result)
 
 if __name__ == "__main__":
