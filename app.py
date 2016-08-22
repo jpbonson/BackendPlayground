@@ -1,5 +1,6 @@
 from flask import Flask, jsonify, abort, request, redirect
 from tinydb import Query, where
+from tinydb.operations import increment
 import config
 
 app = Flask(__name__)
@@ -45,23 +46,20 @@ def delete_user(user_id):
 
 # URL ROUTES
 
-def redirect_url(url_id):
+@app.cache.memoize(timeout=60) # 1 min
+def redirect_url_cached(url_id):
     result = get_table('urls').search(Query().id == url_id)
-    if len(result) == 0:
-        abort(404)
-    url = result[0]["url"]
-    hits = result[0]["hits"] + 1
-    get_table('urls').update({'hits': hits}, Query().id == url_id)
-    return url
+    if len(result) > 0:
+        return result[0]["url"] # cache it
+    return None # don't cache it
 
 @app.route('/urls/<string:url_id>')
-def redirect_url_v1(url_id):
-    url = redirect_url(url_id)
-    return redirect(url, code=301)
-
 @app.route('/<string:url_id>')
-def redirect_url_v2(url_id):
-    url = redirect_url(url_id)
+def redirect_url(url_id):
+    url = redirect_url_cached(url_id)
+    if url is None:
+        abort(404)
+    get_table('urls').update(increment('hits'), Query().id == url_id)
     return redirect(url, code=301)
 
 @app.route('/users/<string:user_id>/urls', methods=['POST'])

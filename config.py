@@ -1,10 +1,12 @@
 import os
+from flask.ext.cache import Cache 
 from tinydb import TinyDB
 
 class BaseConfig(object):
     DEBUG = False
     TESTING = False
     DATABASE = TinyDB('db.json')
+    CACHE_TYPE = 'simple'
 
 class ProductionConfig(BaseConfig):
     DATABASE = TinyDB('prod_db.json')
@@ -25,3 +27,4 @@ config = {
 
 def configure_app(app, config_name = os.getenv('FLASK_CONFIGURATION', 'default')):
     app.config.from_object(config[config_name])
+    app.cache = Cache(app)
