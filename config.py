@@ -13,9 +13,11 @@ class BaseConfig(object):
 
 class ProductionConfig(BaseConfig):
     DATABASE = TinyDB('prod_db.json')
+    LOGGING_LOCATION = 'prod.log'
 
 class DevelopmentConfig(BaseConfig):
     DEBUG = True
+    LOGGING_LOCATION = 'dev.log'
 
 class TestingConfig(BaseConfig):
     TESTING = True
