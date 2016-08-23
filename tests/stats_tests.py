@@ -25,18 +25,12 @@ class UserTests(unittest.TestCase):
         open('tests/db_test.json', 'w').close()
 
         self.table_users = app.config['DATABASE'].table('users')
-        user = {
-            'id': 'maria',
-        }
-        self.table_users.insert(user)
-        user = {
-            'id': 'joao',
-        }
-        self.table_users.insert(user)
-        user = {
-            'id': 'unpolular',
-        }
-        self.table_users.insert(user)
+        names = ['maria', 'joao', 'unpolular']
+        for name in names:
+            user = {
+                'id': name,
+            }
+            self.table_users.insert(user)
 
         self.top10 = []
         self.maria_urls = []
