@@ -1,3 +1,4 @@
+import base64
 from flask import Flask, jsonify, abort, request, redirect
 from tinydb import Query, where
 from tinydb.operations import increment
@@ -54,7 +55,7 @@ def redirect_url_cached(url_id):
     return None # don't cache it
 
 def create_string_for_db_id(db_id):
-    return str(db_id) # TODO
+    return base64.urlsafe_b64encode(str(db_id))
 
 def shorturl(request, url_id):
     return "http://"+request.host+"/"+url_id
