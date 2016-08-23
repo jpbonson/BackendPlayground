@@ -47,4 +47,67 @@ nosetests
 
 ## 5. How to Use
 
-[TODO]
+### Users
+
+Create new user
+```
+curl -i -H "Content-Type: application/json" -X POST -d '{"id":"maria"}' http://localhost:5000/users
+```
+
+List of users
+```
+curl -i -H "Content-Type: application/json" http://localhost:5000/users
+```
+
+Get user
+```
+curl -i -H "Content-Type: application/json" http://localhost:5000/users/maria
+```
+
+Delete user
+```
+curl -i -H "Content-Type: application/json" -X DELETE http://localhost:5000/user/maria
+```
+
+### URLs
+
+Create new URL
+```
+curl -i -H "Content-Type: application/json" -X POST -d '{"url":"https://google.com/"}' http://localhost:5000/users/maria/urls
+```
+Sample Result
+```
+{
+  "hits": 0, 
+  "id": "OA==", 
+  "shortUrl": "http://localhost:5000/OA==", 
+  "url": "https://google.com/"
+}
+```
+
+Use short URL
+```
+curl -i http://localhost:5000/OA==
+```
+
+Delete URL
+```
+curl -i -H "Content-Type: application/json" -X DELETE http://localhost:5000/urls/OA==
+```
+
+### Stats
+
+About URL
+```
+curl -i -H "Content-Type: application/json" http://localhost:5000/stats/OA==
+```
+
+About user
+```
+curl -i -H "Content-Type: application/json" http://localhost:5000/users/maria/stats
+```
+
+About global usage
+```
+curl -i -H "Content-Type: application/json" http://localhost:5000/stats
+```
