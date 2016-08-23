@@ -46,22 +46,18 @@ class UserTests(unittest.TestCase):
             "id": "24096",
             "hits": 12,
             "url": "bleh3",
-            "shortUrl": "http://localhost:5000/blah3",
             "userId": "joao"
         }
         self.table_urls.insert(url)
-        url.pop("userId")
         self.top10.append(url)
 
         url = {
             "id": "23095",
             "hits": 10,
             "url": "blah2",
-            "shortUrl": "http://localhost:5000/blah2",
             "userId": "maria"
         }
         self.table_urls.insert(url)
-        url.pop("userId")
         self.top10.append(url)
         self.maria_urls.append(url)
 
@@ -69,22 +65,18 @@ class UserTests(unittest.TestCase):
             "id": "24095",
             "hits": 6,
             "url": "bleh2",
-            "shortUrl": "http://localhost:5000/blah2",
             "userId": "joao"
         }
         self.table_urls.insert(url)
-        url.pop("userId")
         self.top10.append(url)
 
         url = {
             "id": "23096",
             "hits": 5,
             "url": "blah3",
-            "shortUrl": "http://localhost:5000/blah3",
             "userId": "maria"
         }
         self.table_urls.insert(url)
-        url.pop("userId")
         self.top10.append(url)
         self.maria_urls.append(url) 
 
@@ -92,11 +84,9 @@ class UserTests(unittest.TestCase):
             "id": "23094",
             "hits": 1,
             "url": "blah1",
-            "shortUrl": "http://localhost:5000/blah1",
             "userId": "maria"
         }
         self.table_urls.insert(url)
-        url.pop("userId")
         self.top10.append(url)
         self.maria_urls.append(url)
 
@@ -105,13 +95,15 @@ class UserTests(unittest.TestCase):
                 "id": "something",
                 "hits": 0,
                 "url": "something_useless",
-                "shortUrl": "http://localhost:5000/nothing",
                 "userId": "unpopular"
             }
             self.table_urls.insert(url)
-        url.pop("userId")
-        for count in range(5):
-            self.top10.append(url)
+            if count < 5:
+                self.top10.append(url)
+
+        [x.pop("userId") for x in self.top10]
+        [x.update({"shortUrl": "http://localhost/"+x["id"]}) for x in self.top10]
+        [x.update({"shortUrl": "http://localhost/"+x["id"]}) for x in self.maria_urls]
 
     def tearDown(self):
         pass
@@ -126,7 +118,7 @@ class UserTests(unittest.TestCase):
             "id": "23094",
             "hits": 1,
             "url": "blah1",
-            "shortUrl": "http://localhost:5000/blah1",
+            "shortUrl": "http://localhost/23094",
         }
         self.assertEqual(json.loads(result.data), url)
 

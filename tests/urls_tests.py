@@ -36,7 +36,6 @@ class UserTests(unittest.TestCase):
             "id": "23094",
             "hits": 0,
             "url": "https://github.com/jpbonson/TestingStuff",
-            "shortUrl": "http://localhost:5000",
             "userId": "maria"
         }
         self.table_urls.insert(url)
