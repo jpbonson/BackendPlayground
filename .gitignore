@@ -2,6 +2,7 @@
 prod_db.json
 db.json
 tests/db_test.json
+debug.log
 
 # Byte-compiled / optimized / DLL files
 __pycache__/
