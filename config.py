@@ -24,10 +24,10 @@ class TestingConfig(BaseConfig):
     DATABASE = TinyDB('tests/db_test.json')
 
 config = {
-    "production": "config.ProductionConfig",
-    "development": "config.DevelopmentConfig",
-    "testing": "config.TestingConfig",
-    "default": "config.DevelopmentConfig"
+    'production': 'config.ProductionConfig',
+    'development': 'config.DevelopmentConfig',
+    'testing': 'config.TestingConfig',
+    'default': 'config.DevelopmentConfig'
 }
 
 def configure_app(app, config_name = os.getenv('FLASK_CONFIGURATION', 'default')):

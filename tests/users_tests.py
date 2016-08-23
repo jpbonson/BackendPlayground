@@ -17,7 +17,7 @@ class UserTests(unittest.TestCase):
     def setUp(self):
         # initialize app
         self.app = app
-        config.configure_app(self.app, config_name = "testing")
+        config.configure_app(self.app, config_name = 'testing')
         self.client = app.test_client()
         self.client.testing = True
 
@@ -59,32 +59,32 @@ class UserTests(unittest.TestCase):
     def test_create_new_user_status(self):
         result = self.client.post('/users', 
             data=json.dumps({'id': 'roberto'}), 
-            headers={"content-type": "application/json"})
+            headers={'content-type': 'application/json'})
         self.assertEqual(result.status_code, 201)
 
     def test_create_new_user_data(self):
         user = {'id': 'roberto'}
         result = self.client.post('/users', 
             data=json.dumps(user), 
-            headers={"content-type": "application/json"})
+            headers={'content-type': 'application/json'})
         self.assertEqual(json.loads(result.data), user)
 
     def test_create_new_user_db(self):
         result = self.client.post('/users', 
             data=json.dumps({'id': 'roberto'}), 
-            headers={"content-type": "application/json"})
+            headers={'content-type': 'application/json'})
         self.assertEqual(self.table.search(Query().id == 'roberto'), [{'id': 'roberto'}])
 
     def test_try_create_user_that_already_exists(self):
         result = self.client.post('/users', 
             data=json.dumps({'id': 'maria'}), 
-            headers={"content-type": "application/json"})
+            headers={'content-type': 'application/json'})
         self.assertEqual(result.status_code, 409)
 
     def test_try_create_invalid_user(self):
         result = self.client.post('/users', 
             data=json.dumps({'invalid_field': 'maria'}), 
-            headers={"content-type": "application/json"})
+            headers={'content-type': 'application/json'})
         self.assertEqual(result.status_code, 400)
 
     def test_remove_user(self):

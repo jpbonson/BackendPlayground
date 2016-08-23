@@ -17,7 +17,7 @@ class UserTests(unittest.TestCase):
     def setUp(self):
         # initialize app
         self.app = app
-        config.configure_app(self.app, config_name = "testing")
+        config.configure_app(self.app, config_name = 'testing')
         self.client = app.test_client()
         self.client.testing = True
 
@@ -37,48 +37,48 @@ class UserTests(unittest.TestCase):
         self.table_urls = app.config['DATABASE'].table('urls')
 
         url = {
-            "id": "24096",
-            "hits": 12,
-            "url": "bleh3",
-            "userId": "joao"
+            'id': '24096',
+            'hits': 12,
+            'url': 'bleh3',
+            'userId': 'joao'
         }
         self.table_urls.insert(url)
         self.top10.append(url)
 
         url = {
-            "id": "23095",
-            "hits": 10,
-            "url": "blah2",
-            "userId": "maria"
+            'id': '23095',
+            'hits': 10,
+            'url': 'blah2',
+            'userId': 'maria'
         }
         self.table_urls.insert(url)
         self.top10.append(url)
         self.maria_urls.append(url)
 
         url = {
-            "id": "24095",
-            "hits": 6,
-            "url": "bleh2",
-            "userId": "joao"
+            'id': '24095',
+            'hits': 6,
+            'url': 'bleh2',
+            'userId': 'joao'
         }
         self.table_urls.insert(url)
         self.top10.append(url)
 
         url = {
-            "id": "23096",
-            "hits": 5,
-            "url": "blah3",
-            "userId": "maria"
+            'id': '23096',
+            'hits': 5,
+            'url': 'blah3',
+            'userId': 'maria'
         }
         self.table_urls.insert(url)
         self.top10.append(url)
         self.maria_urls.append(url) 
 
         url = {
-            "id": "23094",
-            "hits": 1,
-            "url": "blah1",
-            "userId": "maria"
+            'id': '23094',
+            'hits': 1,
+            'url': 'blah1',
+            'userId': 'maria'
         }
         self.table_urls.insert(url)
         self.top10.append(url)
@@ -86,18 +86,18 @@ class UserTests(unittest.TestCase):
 
         for count in range(10):
             url = {
-                "id": "something",
-                "hits": 0,
-                "url": "something_useless",
-                "userId": "unpopular"
+                'id': 'something',
+                'hits': 0,
+                'url': 'something_useless',
+                'userId': 'unpopular'
             }
             self.table_urls.insert(url)
             if count < 5:
                 self.top10.append(url)
 
-        [x.pop("userId") for x in self.top10]
-        [x.update({"shortUrl": "http://localhost/"+x["id"]}) for x in self.top10]
-        [x.update({"shortUrl": "http://localhost/"+x["id"]}) for x in self.maria_urls]
+        [x.pop('userId') for x in self.top10]
+        [x.update({'shortUrl': 'http://localhost/'+x['id']}) for x in self.top10]
+        [x.update({'shortUrl': 'http://localhost/'+x['id']}) for x in self.maria_urls]
 
     def tearDown(self):
         pass
@@ -109,10 +109,10 @@ class UserTests(unittest.TestCase):
     def test_get_url_stats_that_exists_data(self):
         result = self.client.get('/stats/23094')
         url = {
-            "id": "23094",
-            "hits": 1,
-            "url": "blah1",
-            "shortUrl": "http://localhost/23094",
+            'id': '23094',
+            'hits': 1,
+            'url': 'blah1',
+            'shortUrl': 'http://localhost/23094',
         }
         self.assertEqual(json.loads(result.data), url)
 
@@ -145,9 +145,9 @@ class UserTests(unittest.TestCase):
         open('tests/db_test.json', 'w').close()
         result = self.client.get('/stats')
         expected = {
-            "hits": 0,
-            "urlCount": 0,
-            "topUrls": [],
+            'hits': 0,
+            'urlCount': 0,
+            'topUrls': [],
         }
         self.assertEqual(json.loads(result.data), expected)
 
