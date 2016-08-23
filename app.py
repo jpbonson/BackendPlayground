@@ -108,6 +108,7 @@ def get_stats_for_urls(urls):
     total_hits = sum([x['hits'] for x in urls])
     sorted_urls = sorted(urls, key=lambda url: url['hits'], reverse=True)
     top10_urls = sorted_urls[0:10]
+    top10_urls = [dict(x) for x in top10_urls]
     [x.pop("userId") for x in top10_urls]
     [x.update({"shortUrl": shorturl(request, x["id"])}) for x in top10_urls]
     result = {
@@ -122,9 +123,10 @@ def get_url_stats(url_id):
     result = get_table('urls').search(Query().id == url_id)
     if len(result) == 0:
         abort(404)
-    result[0].pop("userId")
-    result[0]["shortUrl"] = shorturl(request, result[0]["id"])
-    return jsonify(result[0])
+    url = dict(result[0])
+    url.pop("userId")
+    url["shortUrl"] = shorturl(request, url["id"])
+    return jsonify(url)
 
 @app.route('/users/<string:user_id>/stats', methods=['GET'])
 def get_user_stats(user_id):
