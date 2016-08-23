@@ -17,12 +17,16 @@ sh install.sh
 ```
 
 ## 2. How to Run
+
+To execute for production:
+```
+sh start.sh
+```
+
+To execute for development:
 ```
 python app.py
 ```
-The API will be running on http://127.0.0.1:5000/
-
-[TODO: How run on different modes]
 
 ## 3. How to Test
 
