@@ -1,0 +1,97 @@
+MapReduce:
+- MapReduce is a programming model and an associated implementation for processing and generating large data sets with a parallel, distributed algorithm on a cluster.
+- MapReduce is the heart of Hadoop®
+
+https://pythonhosted.org/mrjob/guides/quickstart.html
+
+pip install mrjob
+
+from mrjob.job import MRJob
+
+class MRWordFrequencyCount(MRJob):
+
+    def mapper(self, _, line):
+        yield "chars", len(line)
+        yield "words", len(line.split())
+        yield "lines", 1
+
+    def reducer(self, key, values):
+        yield key, sum(values)
+
+
+if __name__ == '__main__':
+    MRWordFrequencyCount.run()
+
+input: python word_count.py my_file.txt
+outputs:
+"chars" 3654
+"lines" 123
+"words" 417
+
+
+MongoDB:
+- MongoDB is a cross-platform document-oriented database.
+- Classified as a NoSQL database
+- uses JSON-like documents with dynamic schemas
+
+ETL:
+- ETL (Extract, Transform and Load) is a process in data warehousing responsible for pulling data out of the source systems and placing it into a data warehouse.
+
+AWS:
+- Amazon Web Services (AWS), is a collection of cloud computing services, also called web services, that make up a cloud-computing platform offered by Amazon.com.
+- The most central and well-known of these services arguably include Amazon Elastic Compute Cloud, also known as "EC2", and Amazon Simple Storage Service, also known as "S3".
+
+Apache Hadoop:
+- Apache Hadoop is an open-source software framework written in Java for distributed storage and distributed processing of very large data sets on computer clusters built from commodity hardware.
+
+Hive:
+- The Apache Hive ™ data warehouse software facilitates querying and managing large datasets residing in distributed storage. Hive provides a mechanism to project structure onto this data and query the data using a SQL-like language called HiveQL. At the same time this language also allows traditional map/reduce programmers to plug in their custom mappers and reducers when it is inconvenient or inefficient to express this logic in HiveQL.
+- Hive provides a SQL-like interface to data stored in HDP.
+- Hive because of its SQL like query language is often used as the interface to an Apache Hadoop based data warehouse. Hive is considered friendlier and more familiar to users who are used to using SQL for querying data. 
+- https://cwiki.apache.org/confluence/display/Hive/Tutorial
+
+SPARQL:
+- it is used for NLP, not big data!
+
+#####
+
+genetic algorithms:
+- In the field of artificial intelligence, a genetic algorithm (GA) is a search heuristic that mimics the process of natural selection. This heuristic (also sometimes called a metaheuristic) is routinely used to generate useful solutions to optimization and search problems.
+1. [Start] Generate random population of n chromosomes (suitable solutions for the problem)
+2. [Fitness] Evaluate the fitness f(x) of each chromosome x in the population
+3. [New population] Create a new population by repeating following steps until the new population is complete
+    1. [Selection] Select two parent chromosomes from a population according to their fitness (the better fitness, the bigger chance to be selected)
+    2. [Crossover] With a crossover probability cross over the parents to form a new offspring (children). If no crossover was performed, offspring is an exact copy of parents.
+    3. [Mutation] With a mutation probability mutate new offspring at each locus (position in chromosome).
+    4. [Accepting] Place new offspring in a new population
+4. [Replace] Use new generated population for a further run of algorithm
+5. [Test] If the end condition is satisfied, stop, and return the best solution in current population
+6. [Loop] Go to step 2
+
+genetic programming:
+- In artificial intelligence, genetic programming (GP) is an evolutionary algorithm-based methodology inspired by biological evolution to find computer programs that perform a user-defined task. Essentially GP is a set of instructions and a fitness function to measure how well a computer has performed a task.
+
+neural networks:
+- In machine learning and cognitive science, artificial neural networks (ANNs) are a family of models inspired by biological neural networks (the central nervous systems of animals, in particular the brain) and are used to estimate or approximate functions that can depend on a large number of inputs and are generally unknown. Artificial neural networks are generally presented as systems of interconnected "neurons" which exchange messages between each other. The connections have numeric weights that can be tuned based on experience, making neural nets adaptive to inputs and capable of learning.
+
+bayesian networks:
+- A Bayesian network, Bayes network, belief network, Bayes(ian) model or probabilistic directed acyclic graphical model is a probabilistic graphical model (a type of statistical model) that represents a set of random variables and their conditional dependencies via a directed acyclic graph (DAG).
+
+ontologies:
+- In computer science and information science, an ontology is a formal naming and definition of the types, properties, and interrelationships of the entities that really or fundamentally exist for a particular domain of discourse.
+
+multi-agent systems:
+- A multi-agent system (M.A.S.) is a computerized system composed of multiple interacting intelligent agents within an environment. Multi-agent systems can be used to solve problems that are difficult or impossible for an individual agent or a monolithic system to solve.
+- Agent Characteristics: Autonomy, Local views, Decentralization
+- eg.: distributed problem solving, robotics, games
+
+reinforcement learning:
+- https://webdocs.cs.ualberta.ca/~sutton/book/ebook/node9.html
+
+recommendation systems:
+- Recommender systems or recommendation systems (sometimes replacing "system" with a synonym such as platform or engine) are a subclass of information filtering system that seek to predict the 'rating' or 'preference' that a user would give to an item.
+- https://en.wikipedia.org/wiki/Recommender_system
+- Collaborative filtering, Content-based filtering, Hybrid
+
+classification
+clustering

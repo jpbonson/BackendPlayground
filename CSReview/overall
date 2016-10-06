@@ -1,0 +1,120 @@
+Top 10 mistakes:
+#1 | Practicing on a Computer (practive with pen and paper)
+#2 | Not Rehearsing Behavioral Questions
+#3 | Not Doing a Mock Interview
+#4 | Trying to Memorize Solutions
+#5 | Not Solving Problems Out Loud (during the interview)
+#6 | Rushing 
+#7 | Sloppy Coding
+#8 | Not Testing
+#9 | Fixing Mistakes Carelessly (BE REALLY CAREFUL HERE!!!!!!!!!!!!)
+#10 | Giving Up
+
+- say that I will usually write my line of thought instead of saying it, ask if it is ok
+    - why: bad speaking english, and it is better for to analyse my options
+
+Five Steps to a Technical Question
+1. Ask your interviewer questions to resolve ambiguity.
+2. Design an Algorithm.
+    - space and time complexity?
+    - what happens if there is a lot of data?
+    - issues, limitations, and trade-offs?
+    - if they gave you specific data, have you leveraged that information?
+3. Write pseudocode first, but make sure to tell your interviewer that you'll eventually write "real" code.
+4. Write your code at a moderate pace.
+    - don't need to rush through your code
+    - use data structures and classes generously
+5. Test your code and carefully fix any mistakes.
+    - extreme cases: 0, negative, null, maximums, minimums
+    - unexpected input
+    - general cases
+    - when you find mistakes, carefully think through why the bug is occurring before fixing the mistake.
+
+
+If you read all this code and thought, "there's no way I could do all this in an interview!"
+you're probably right. You couldn't. But, your performance on any problem is evaluated
+compared to other candidates on the same problem. So while you couldn't implement
+all this, neither can they. You are at no disadvantage when you get a tricky problem like
+this.
+You help yourself out a bit by separating code out into other methods. For example,
+by pulling partitionAndSearch out into its own method, you will have an easier time
+outlining key aspects of the code. You can then come back to fill in the body for partitionAndSearch
+if you have time.
+
+
+
+Good questions might be ones like: What are the data types? How much data is there? What assumptions do you need to solve the problem? Who is the user?
+
+It's perfectly acceptable, and even recommended, to first mention the brute force solution.
+You can then continue to optimize from there
+
+
+Five Algorithm Approaches
+- Approach I: Examplify (sample inputs)
+- Approach II: Pattern Matching (base on other solutions/algorithms)
+- Approach III: Simplify and Generalize (solve a simplified version of the problem, than solve the complete problem)
+- Approach IV: Base Case and Build (good for recursion, start with the base case and test the next ones)
+- Approach V: Data Structure Brainstorm (run through a list of data structures and try to apply each one)
+
+
+What Good Coding Looks Like
+- Correct
+- Efficient
+- Simple
+- Readable
+- Maintainable
+
+- Use Data Structures Generously
+- Appropriate Code Reuse
+- Modular
+- Flexible and Robust
+- Error Checking
+
+
+Focus on demonstrating your problem solving skills, applied to the question asked. If it's a coding question, providing efficient prototype code in a short time frame to solve the problem is the key. If it's a design question, working with your interviewer to create a high-level system, at times perhaps diving deeper on particular salient issues, is what matters. If it's a general analysis question, show that you understand all particularities of the problem described and (where applicable) offer multiple solutions, discussing their relative merits. Every Interviewer ultimately wants to answer the question of whether they'd be comfortable working with you in their team. 
+
+
+So when you get a hard question, don't panic. Just start talking aloud about how you would solve it. Show your interviewer how you're tackling the problem so that he doesn't think you're stuck.
+
+
+And, one more thing: you're not done until the interviewer says you're done! What I mean here is that when you come up with an algorithm, start thinking about the problems accompanying it. When you write code, start trying to find bugs
+
+
+So your best bet, interview-prep wise, is to practice the art of recognizing that certain problem classes are best solved with certain algorithms and data structures.
+
+
+As for short-term preparation, all you can really do is make sure you are as alert and warmed up as possible. Don't go in cold. Solve a few problems and read through your study books. Drink some coffee: it actually helps you think faster, believe it or not. Make sure you spend at least an hour practicing immediately before you walk into the interview.
+
+
+You should go in humble, open-minded, and focused.
+
+
+Treat every question as legitimate, even if you are frustrated that you don't know the answer.
+
+
+Feel free to ask for help or hints if you're stuck.
+
+
+If in doubt, you should ask them if they would like to see code.
+
+
+It's OK (and highly encouraged) to ask a few clarifying questions, and occasionally verify with the interviewer that you're on the track they want you to be on.
+
+
+So even if you think you know the answer to the problem, ask some questions and talk about the approach you'll take a little before diving in.
+
+
+One last non-technical tip: bring your own whiteboard dry-erase markers. They sell pencil-thin ones at office supply stores, whereas most companies (including Google) tend to stock the fat kind.
+You should also practice whiteboard space-management skills, such as not starting on the right and coding down into the lower-right corner in Teeny Unreadable Font.
+
+
+Whenever someone gives you a problem, think graphs.
+
+
+Does the candidate...
+- Listen carefully and comprehend the question?
+- Ask the correct questions before proceeding?
+- Enjoy finding multiple solutions before choosing the best one?
+- Seek new ideas and methods for tackling the problem?
+- Seem flexible and open to thoughts and new ideas?
+- Have the ability to solve even more complex problems?

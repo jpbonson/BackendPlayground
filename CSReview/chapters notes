@@ -1,0 +1,343 @@
+BigO: http://bigocheatsheet.com/
+
+Array
+- simplicity
+- well suited for situations where the number of data items is known
+
+Linked List
+- great for storing data when the number of items is either unknown, or subject to change
+- no way to access an arbitrary item from the list
+
+Queue
+- whenever a "shortest path" or "least number of moves" is requested, there is a good chance that a BFS, using a queue, will lead to a successful solution.
+
+Stacks
+- useful to understand recursion and the application's stack
+
+Trees
+- examples: XML document and the file storage system on most disks
+- Binary Trees
+    - one of the most efficient ways to store and read a set of records that can be indexed by a key value in some way
+    - one might ask why a binary tree is preferable to an array of values that has been sorted. In either case, finding a given key value (by traversing a binary tree, or by performing a binary search on a sorted array) carries a time complexity of O(log n). However, adding a new item to a binary tree is an equally simple operation. In contrast, adding an arbitrary item to a sorted array requires some time-consuming reorganization of the existing data in order to maintain the desired ordering. 
+
+Priority Queues
+- But what happens if we say that the car can move forward one block in two minute, but requires three minutes to make a turn and then move one block (in a direction different from how the car was originally facing)? Depending on what type of move operation we attempt, a new state is not simply one "step" from the current state, and the "in order" nature of a simple queue is lost. This is where priority queues come in.
+- Simply put, a priority queue accepts states, and internally stores them in a method such that it can quickly pull out the state that has the least cost.
+- One very simple implementation of a priority queue is just an array that searches (one by one) for the lowest cost state contained within, and appends new elements to the end.
+- A special type of binary tree called a heap is typically used for priority queues. In a heap, the root node is always less than either of its children. Furthermore, this tree is a "complete tree" from the left. Furthermore, it is always the leftmost node(s) that are filled first. 
+- To extract a value from a heap, the root node (with the lowest cost or highest priority) is pulled. The deepest, rightmost leaf then becomes the new root node. If the new root node is larger than at at least one of its children, then the root is swapped with its smallest child, in order to maintain the property that the root is always less than its children. This continues downward as far as necessary. Adding a value to the heap is the reverse. The new value is added as the next leaf, and swapped upward as many times as necessary to maintain the heap property. 
+
+Hash Tables
+- example hash value: might be the first n bits of data, the last n bits of data, a modulus of the value, or in some cases, a more complicated function
+- using the hash value, different "hash buckets" can be set up to store data
+- a hash bucket containing more than one value is known as a "collision". One of the simplest methods to deal with collisions is to implement a structure like a linked list at the hash bucket level, so that elements with the same hash value can be chained together at the proper location. Other, more complicated schemes may involve utilizing adjacent, unused locations in the table, or re-hashing the hash value to obtain a new value. 
+
+
+Chapter 8 | Object-Oriented Design
+    Step 1: Handle Ambiguity
+        When being asked an object-oriented design question, you should inquire who is going
+        to use it and how they are going to use it. Depending on the question, you may even
+        want to go through the "six Ws": who, what, where, when, how, why.
+    Step 2: Define the Core Objects
+    Step 3: Analyze Relationships
+    Step 4: Investigate Actions
+     
+    Design Patterns
+    - Singleton
+    - Factory Method
+
+Chapter 9 | Recursion and Dynamic Programming
+    - a good hint that a problem is recursive is that it can be built off of sub-problems
+    - When you hear a problem beginning with the following statements, it's often (though
+    not always) a good candidate for recursion: "Design an algorithm to compute the nth
+    ,..";"Write code to list the first n...";"Implement a method to compute all..."; etc..
+    - bottom-up and top-down recursive solutions
+    - if each call does two recursive calls. This means that the runtime is 0(2**n)
+    - Dynamic programming, as you can see, is nothing to be scared of. It's little more than
+    recursion where you cache the results. A good way to approach such a problem is often
+    to implement it as a normal recursive solution, and then to add the caching part.
+    - if your algorithm has 0(n) recursive calls, then it uses 0(n) memory
+    - Before diving into recursive code, ask yourself how hard it
+    would be to implement it iteratively, and discuss the trade-offs with your interviewer.
+
+
+Chapter 10 | Scalability and Memory Limits
+    The Step-By-Step Approach
+    - Step 1: Make Believe (pretends it fits a machine, then generalizes)
+    - Step 2: Get Real (how much data can fit in a machine? how to split the data?)
+    - Step 3: Solve Problems (how to solve the identified issues)
+
+    - example of options: text files, SQL, XML, JSON, SOAP, REST, MongoDB...
+    - if takes too much memory: store some of the data on disk or by split up the data across machines
+
+
+Chapter 11 Sorting and Searching
+    - consider efficiency, type of data, and ranges of data
+    - ways to search a data structure extend beyond binary search, for example, binary trees and hash tables
+
+
+Chapter 12 | Testing
+    - Break down your testing into the main components, and go from there.
+    - BlackBox Testing vs. White Box Testing
+    - Who will use it? And why?
+    - What are the use cases?
+    - What are the details of the use cases?
+    - What are the stress conditions/failure conditions? When fails, what should happen?
+    - What are the test cases? How would you perform the testing?
+    - Manual or automated?
+    - Test cases: normal, extreme, error, unusual input (eg. test a sort function with a sorted array)
+
+
+Chapter 16 | Threads and Locks
+    - Threads:
+        - A thread exists within a process and shares the process' resources (including its heap
+        space). Multiple threads within the same process will share the same heap space. Each thread still has its own registers and its own stack, but other threads can read and write the heap memory.
+        - In Python, because of GIL (Global Interpreter Lock) a single python process cannot run threads in parallel (utilize multiple cores). It can however run them concurrently (context switch during I/O bound operations)
+        - pros
+            - Lightweight - low memory footprint
+            - Shared memory - makes access to state from another context easier
+            - Allows you to easily make responsive UIs
+            - cPython C extension modules that properly release the GIL will run in parallel
+            - Great option for I/O-bound applications
+        - cons
+            - cPython - subject to the GIL
+            - Not interruptible/killable
+            - If not following a command queue/message pump model, then is necessary to manual use synchronization primitives
+            - Code is usually harder to understand and to get right - the potential for race conditions increases dramatically
+    - Processes:
+        - A process can be thought of as an instance of a program in execution. A process is an
+        independent entity to which system resources (e.g., CPU time and memory) are allocated.
+        Each process is executed in a separate address space, and one process cannot
+        access the variables and data structures of another process. If a process wishes to access
+        another process' resources, inter-process communications have to be used. These
+        include pipes, files, sockets, and other forms.
+        - pros
+            - Separate memory space
+            - Code is usually straightforward
+            - Takes advantage of multiple CPUs & cores
+            - Avoids GIL limitations for cPython
+            - Eliminates most needs for synchronization primitives unless if you use shared memory 
+            - Child processes are interruptible/killable
+            - A must with cPython for CPU-bound processing
+        - cons
+            - IPC a little more complicated with more overhead (communication model vs. shared memory/objects)
+            - Larger memory footprint
+    - Global interpreter lock (GIL)
+        - a mechanism used in computer language interpreters to synchronize the execution of threads so that only one native thread can execute at a time. An interpreter that uses GIL always allows exactly one thread to execute at a time, even if run on a multi-core processor
+        - applications running on implementations with a GIL can be designed to use separate processes to achieve full parallelism, as each process has its own interpreter and in turn has its own GIL. Otherwise, the GIL can be a significant barrier to parallelism
+        - why: increased speed of single-threaded programs, easy integration of C libraries, ease of implementation
+        - workaround: use other implementations of python, or use multiple processes
+    - Synchronization Mechanisms
+        - Locks
+            - used to synchronize access to a shared resource
+            - a thread gets first must acquire the lock associated with the resource
+        - Mutex
+            - a mutex is the same as a lock but it can be system wide.
+        - Monitor
+            - provides mutual exclusion to an object i.e. at any point in time, at most one process may access any of the object's members/ execute any of its methods
+        - Semaphor
+            - is a counter which grants count number of accesses to a resource at a time. So if a semaphore has initial count = 5, the resource it protects may be accessed by at most 5 requestors at a time
+            - eg.: producer-consumer process pair
+    - Deadlocks
+        - conditions for a deadlock:
+        1) circular chain
+        2) a thread can get a resource while wait for another resource
+        3) no way to other thread to kill the stuck thread
+        4) only one thread can access the resource per time
+        - to prevent deadlocks: avoid at least one of these conditions, usually 4)
+    - Livelocks
+        - is similar to a deadlock, except that the states of the processes involved in the livelock constantly change with regard to one another, none progressing. Livelock is a special case of resource starvation; the general definition only states that a specific process is not progressing
+        - the threads are not blocked — they are simply too busy responding to each other to resume work
+        - eg.: two people meet in a narrow corridor, and each tries to be polite by moving aside to let the other pass
+    - how context switching works
+        - the process of storing and restoring the state (more specifically, the execution context) of a process or thread so that execution can be resumed from the same point at a later time
+        - enables multiple processes to share a single CPU
+        - steps
+            - save the state of the current process (the registers, instruction pointer, SO specific data...)
+                - usually stored in a data structure called a process control block (PCB), or switchframe
+            - load the PCB and context of the next process
+        - scheduling: preemptive schedulers (use timers to avoid starving processes), or when the process is waiting
+            - use priorities to define the processes order
+        - modern architectures are interrupt driven
+            - Interrupt handling is the process of a processor or process receiving an asynchronous signal that typically requires it to "drop" what ever it is doing and work on this interrupt immediately.  By definition it requires a context switch to accomplish this. Once the interrupt is serviced the earlier task can resume.
+    - Stack
+        - static memory allocation (stored in the computer's RAM)
+        - very fast access
+        - when a function is called, a block is reserved on the top of the stack for data such as local variables and a pointer to previous function
+        - reserved in a LIFO (last in first out) order
+        - each thread has one
+        - the size of the stack is set when a thread is created
+        - the stack is faster because all free memory is always contiguous. No list needs to be maintained of all the segments of free memory, just a single pointer to the current top of the stack. Compilers usually store this pointer in a special, fast register for this purpose.
+        - variables created on the stack will go out of scope and automatically deallocate
+        - can have a stack overflow when too much of the stack is used
+        - once a function returns, anything local to that function is immediately freed from the stack
+        - a stack is usually pre-allocated, because by definition it must be contiguous memory
+        - the language compiler or the OS determine its size
+        - controlled by the programming language, OS and even the system architecture
+    - Heap
+        - memory allocated dynamically and randomly; i.e. out of order
+        - much more complex to keep track of which parts of the heap are allocated or free at any given time
+        - usually, only one heap for the application
+        - the size of the heap is set on application startup, but can grow as space is needed
+        - variables on the heap must be destroyed manually and never fall out of scope
+        - can have fragmentation
+        - in C++ data created on the heap will be pointed to by pointers and allocated with new or malloc
+        - can have allocation failures if too big of a buffer is requested to be allocated
+        - responsible for memory leaks
+        - controlled by the OS, with the application calling API functions to do this allocation
+
+Internet:
+- SSL (Secure Sockets Layer) is the standard security technology for establishing an encrypted link between a web server and a browser. This link ensures that all data passed between the web server and browsers remain private and integral.
+- REST vs SOAP:
+    - REST: 
+        - used for exposing a public API over the internet to handle CRUD operations on data
+        - REST is focused on accessing named resources through a single consistent interface
+        - REST provides true “Web services” based on URIs and HTTP, so it is simpler
+        - REST has better performance and scalability. REST reads can be cached, SOAP based reads cannot be cached.
+        - eg.: most internet based services
+    - SOAP: 
+        - has it’s own protocol and focuses on exposing operations (not data) as services
+        - is focused on accessing named operations, each implement some business logic through different interfaces
+        - only permits XML
+        - good for enterprise security, but don't scale well:
+            - supports WS-Security
+            - supports ACID Transactions
+            - implementation of data integrity, data privacy, and reliability
+        - eg.: iPhone application to interface with a bank
+
+Math:
+- median: "middle" of a sorted list of numbers
+- factorial function: 4! = 4*3*2*1 = 24
+- combinatorics:
+    - permutations:
+        - If the order does matter
+        - with repetition
+            - n × n × ... (r times)
+            - eg.: 10*10*10
+        - without repetition
+            - n!/(n-r)!
+            - eg.: 10*9*8
+        - words with letter repetition:
+            - apple: 5!/2! = 60 words
+            - aabbb: 5!/2!3! = 10 words
+            - casa: 4!/2! = 12
+    - combinations
+        - If the order doesn't matter
+        - with repetition
+            - (n+r-1)!/r!(n-1)!
+        - without repetition
+            - adjust the permutations formula to reduce it by how many ways the objects could be in order
+            - n!/r!(n-r)!
+            - eg.: 10*9*8/3*2*1
+    - n-choose-k problems:
+        - there are n!/k!(n-k)! (combinations without repetition) ways to choose k elements
+    - recursion can be used the problems with fatorial
+- probability:
+    - conditional probability: P(A|B) = P(A,B)/P(B)
+    - independence: if P(A,B) = P(A)P(B)
+    - conditional independence:
+        - “X and Y are conditionally independent given Z”
+        - if P(X|Z) = P(X|Y,Z) or P(X,Y|Z) = P(X|Z)P(Y|Z)
+    - marginal distribution: the probability distribution of a random variable on its own
+    - joint distribution: P(A)P(B)
+    - Chain Rule
+        - P(X1,X2, . . . ,Xn) = P(X1)P(X2|X1) · · · P(Xn|X1,X2, . . . ,Xn−1)
+    - Bayes Rule / Bayesian inference
+        - P(h|D) = P(D|h)P(h)/P(D)
+
+
+NP-complete:
+    - What is NP?
+        - NP is the set of all decision problems (questions with a yes-or-no answer) for which the 'yes'-answers can be verified in polynomial time (O(n**k)) by a deterministic Turing machine. Polynomial time is sometimes used as the definition of fast or quickly.
+    - What is P?
+        - P is the set of all decision problems which can be solved in polynomial time by a deterministic Turing machines. Since they can be solved in polynomial time, they can also be verified in polynomial time. Therefore P is a subset of NP.
+    - What is NP-Complete?
+        - conditions:
+            - x is in NP
+            - every problem in NP is reducible to x
+        - So, what makes NP-Complete so interesting is that if any one of the NP-Complete problems was to be solved quickly, then all NP problems can be solved quickly.
+    - What is NP-Hard?
+        - NP-Hard are problems that are at least as hard as the hardest problems in NP. Note that NP-Complete problems are also NP-hard. However not all NP-hard problems are NP (or even a decision problem), despite having NP as a prefix. That is the NP in NP-hard does not mean non-deterministic polynomial time.
+    - P = NP?
+        - P stands for polynomial time. NP stands for non-deterministic polynomial time.
+        - It has been proven that any problem that can be solved by a non-deterministic TM can be solved by a deterministic TM. However, it is not clear how much time it will take. The statement P=NP means that if a problem takes polynomial time on a non-deterministic TM, then one can build a deterministic TM which would solve the same problem also in polynomial time. So far nobody have been able to show that it can be done, but nobody has been able to prove that it cannot be done, either.
+        - if anyone ever comes up with a polynomial-time solution to an NP-complete problem, that will also give a polynomial time solution to any NP problem
+        - if anyone were to prove that P!=NP, then we would be certain that there is no way to solve an NP problem in polynomial time on a conventional computer.
+    - Turing Machine
+        - an imaginary computer called a Turing machine (TM). This machine has a finite number of states, and an infinite tape, which has discrete cells into which a finite set of symbols can be written and read. At any given time, the TM is in one of its states, and it is looking at a particular cell on the tape. Depending on what it reads from that cell, it can write a new symbol into that cell, move the tape one cell forward or backward, and go into a different state. This is called a state transition. Amazingly enough, by carefully constructing states and transitions, you can design a TM, which is equivalent to any computer program that can be written. This is why it is used as a theoretical model for proving things about what computers can and cannot do.
+        - There are two kinds of TM's that concern us here: deterministic and non-deterministic. A deterministic TM only has one transition from each state for each symbol that it is reading off the tape. A non-deterministic TM may have several such transition, i. e. it is able to check several possibilities simultaneously. This is sort of like spawning multiple threads. The difference is that a non-deterministic TM can spawn as many such "threads" as it wants, while on a real computers only a specific number of threads can be executed at a time (equal to the number of CPUs). In reality, computers are basically deterministic TMs with finite tapes. On the other hand, a non-deterministic TM cannot be physically realized, except maybe with a quantum computer.
+        - A nondeterministic Turing machine is a generalization
+        of the standard TM for which every configuration
+        may yield none, or one or more than one next
+        configurations.
+        - In contrast to the deterministic Turing machines, for
+        which a computation is a sequence of configurations,
+        a computation of a nondeterministic TM is a tree of
+        configurations that can be reached from the start con-
+        figuration.
+    - there are often approximation solutions for NP-Complete problems
+    - most famous classes of NP-complete problems:
+        - Subset sum problem:
+            - given a set (or multiset) of integers, is there a non-empty subset whose sum is zero?
+            - eg.: for {−7, −3, −2, 5, 8}, the subset {−3, −2, 5} sums to zero
+        - traveling salesman:
+            - NP-hard version: Given a list of cities and the distances between each pair of cities, what is the shortest possible route that visits each city exactly once and returns to the origin city?
+                - That isn't a decision problem, and we can't verify any proposed solution directly, so is not NP-complete
+            - NP-complete: given a length L, the task is to decide whether the graph has any tour shorter than L
+        - knapsack problem:
+            - Given a set of items, each with a weight and a value, determine the number of each item to include in a collection so that the total weight is less than or equal to a given limit and the total value is as large as possible. It derives its name from the problem faced by someone who is constrained by a fixed-size knapsack and must fill it with the most valuable items.
+        - Boolean satisfiability problem (3SAT):
+            - is the problem of determining if there exists an interpretation that satisfies a given Boolean formula. In other words, it asks whether the variables of a given Boolean formula can be consistently replaced by the values TRUE or FALSE in such a way that the formula evaluates to TRUE.
+        - Hamiltonian path problem:
+            - determine whether a Hamiltonian path (a path in an undirected or directed graph that visits each vertex exactly once) exists in a given graph (whether directed or undirected).
+            - is a special case of the travelling salesman problem
+        - Subgraph isomorphism problem:
+            - two graphs G and H are given as input, and one must determine whether G contains a subgraph that is isomorphic to H.
+        - Clique problem:
+            - In computer science, the clique problem refers to any of the problems related to finding particular complete subgraphs ("cliques") in a graph, i.e., sets of elements where each pair of elements is connected
+        - Vertex cover:
+            - a vertex cover of a graph is a set of vertices such that each edge of the graph is incident to at least one vertex of the set.
+        - Independent set:
+            - a set of vertices in a graph, no two of which are adjacent.
+        - Dominating set:
+            - a dominating set for a graph G = (V, E) is a subset D of V such that every vertex not in D is adjacent to at least one member of D.
+        - Graph coloring
+            - it is a way of coloring the vertices of a graph such that no two adjacent vertices share the same color; this is called a vertex coloring.
+            - It is NP-complete to decide if a given graph admits a k-coloring for a given k except for the cases k = 1 and k = 2. In particular, it is NP-hard to compute the chromatic number.
+    - not sure if it is NP-complete:
+        - graph isomorphism problem:
+            - is the computational problem of determining whether two finite graphs are isomorphic.
+            - Two graphs are isomorphic if one can be transformed into the other simply by renaming vertices.
+    - Solving NP-complete problems
+        - Approximation: search for an "almost" optimal solution
+        - Randomization: Use randomness to get a faster average running time, and allow the algorithm to fail with some small probability (eg.: Genetic algorithms)
+        - Restriction: By restricting the structure of the input (e.g., to planar graphs), faster algorithms are usually possible.
+        - Parameterization: Often there are fast algorithms if certain parameters of the input are fixed.
+        - Heuristic: An algorithm that works "reasonably well" in many cases, but for which there is no proof that it is both always fast and always produces a good result.
+    - In fact, there are quite a few important problems for which the best-known algorithm that produces an optimal answer is insufficiently slow for most purposes. The most famous group of these problems is called NP, which stands for non-deterministic polynomial. When a problem is said to be NP-complete or NP-hard, it mean no one knows a good way to solve them optimally. Furthermore, if someone did figure out an efficient algorithm for one NP-complete problem, that algorithm would be applicable to all NP-complete problems.
+        - so, programmers look for sufficiently fast algorithms that give good, but not optimal solutions
+
+
+Induction:
+    - specify the restrictions to the inputs and the expected outputs
+    - useful to implement recursion
+    - define the base case, and the step of the case n
+
+Extras:
+    - 1 GB == 1000**3 bytes
+    - 1 byte == 8 bits
+    - a character is 4 bytes
+
+Asserts should be used to test conditions that should never happen. The purpose is to crash early in the case of a corrupt program state.
+Exceptions should be used for errors that can conceivably happen, and you should almost always create your own Exception classes. Exceptions are used to control flow.
+
+
+Ford-Fulkerson Algorithm for Maximum Flow Problem
+Use DFS or BFS, and execute the following steps:
+1. Find an augmenting path (one were all the forward edges are not full, and all backwards edges are not empty)
+2. Compute de bottleneck capacity
+3. Augment each edge and the total flow
+Obs.: The balance between how much is entering and leaving a node must be kept
+http://www.geeksforgeeks.org/ford-fulkerson-algorithm-for-maximum-flow-problem/
+https://www.youtube.com/watch?v=-8MwfgB-lyM
+https://www.youtube.com/watch?v=Tl90tNtKvxs
