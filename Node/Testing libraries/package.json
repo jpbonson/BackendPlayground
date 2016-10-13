@@ -1,0 +1,16 @@
+{
+  "name": "testing_libraries",
+  "version": "0.0.0",
+  "description": "Testing node.js libraries.",
+  "main": "testing_lodash.js",
+  "dependencies": {
+    "lodash": "^4.16.4"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC",
+  "keywords": []
+}
