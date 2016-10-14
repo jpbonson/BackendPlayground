@@ -1,0 +1,16 @@
+{
+    "apps": [
+        {
+            "name": "xpto",
+            "script": "./index.js",
+            "instances": 0,
+            "exec_mode": "cluster",
+            "env": {
+                "PM2_GRACEFUL_TIMEOUT": 50000,
+            },
+            "env_production" : {
+                "PM2_GRACEFUL_TIMEOUT": 50000
+            }
+        }
+    ]
+}

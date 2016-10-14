@@ -1,0 +1,19 @@
+{
+  "name": "Restify_with_pm2",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "pm2": "^2.0.18",
+    "restify": "^4.1.1"
+  },
+  "devDependencies": {
+    "async": "^2.1.1"
+  }
+}
