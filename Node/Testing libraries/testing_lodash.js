@@ -1,4 +1,5 @@
 // https://www.airpair.com/node.js/posts/top-10-mistakes-node-developers-make
+// https://lodash.com/docs/4.16.4
 
 'use strict';
 
@@ -122,30 +123,153 @@ console.log(result); // => false
 var result = object == other;
 console.log(result); // => false
 
+// isString, isObject, isEmpty, isNumber, isNaN, 
+// isUndefined, isArray, isObject
 
-// _.omit(res.body, keys);
-// _.range(2, totalPages + 1)
+
+console.log("\n# OBJECT\n");
+
+var object = { 'a': [{ 'b': { 'c': 3 } }] };
+ 
+var result = _.get(object, 'a[0].b.c');
+console.log(result); // => 3
+
+var result = _.get(object, 'a[0][b][c]');
+console.log(result); // => 3
+ 
+var result = _.get(object, ['a', '0', 'b', 'c']);
+console.log(result); // => 3
+ 
+var result = _.get(object, 'a.b.c', 'default');
+console.log(result); // => 'default'
+
+var result = _.get(object, 'a.b.c', null);
+console.log(result); // => null
+
 // _.get(channel, `config.${key}`, null)
-// _.pick(fixtures.order(), 'hubId');
-// _.pickBy(object, value => !_.isNull(value) && value !== '' && !_.isUndefined(value));
-// _.padStart(index, 2, '0');
-// _.isString(value)
-// _.isObject(value)
-// _.isEmpty(customer.CustomerName)
-// _.has(customer, 'Contact.ContactAddresses')
-// _.isNumber(order.OrderId)
-// _.isNaN(stock.Quantity)
-// _.isUndefined(order.hubId)
-// _.isArray(price.prices)
-// _.values(converted[key]);
-// _.invert(toMagento)
-// _.isObject(object)
-// _.unset(customer, 'connectorStatus')
-// _.set(newAddresses, `${addressKey}.status`, 'INACTIVE');
-// _.camelCase(entity)
-// 
-// _.merge(sku, {
-//     basePrice: value.parent_item.original_price,
-//     discount: value.parent_item.discount_amount,
-//     price: value.parent_item.price
-// });
+
+
+
+var object = { 'a': { 'b': 2 } };
+var other = _.create({ 'a': _.create({ 'b': 2 }) });
+ 
+var result = _.has(object, 'a');
+console.log(result); // => true
+ 
+var result = _.has(object, 'a.b');
+console.log(result); // => true
+ 
+var result = _.has(object, ['a', 'b']);
+console.log(result); // => true
+ 
+var result = _.has(object, ['a', 'b', 'c']);
+console.log(result); // => false
+ 
+var result = _.has(other, 'a');
+console.log(result); // => false
+
+
+var object = { 'a': 1, 'b': 2, 'c': 1 };
+var result = _.invert(object);
+console.log(result); // => { '1': 'c', '2': 'b' }
+
+
+var object = {
+  'a': [{ 'b': 2 }, { 'd': 4 }], 'x': 7, z: 9
+};
+var other = {
+  'a': [{ 'c': 3 }, { 'e': 5 }], 'y': 8, z: 19
+};
+var result = _.merge(object, other);
+console.log(result);
+// => { a: [ { b: 2, c: 3 }, { d: 4, e: 5 } ], x: 7, z: 19, y: 8 }
+
+var object = { 'a': 1, 'b': '2', 'c': 3 };
+var result = _.omit(object, ['a', 'c']);
+console.log(result); // => { 'b': '2' }
+
+var object = { 'a': 1, 'b': '2', 'c': 3 };
+var result = _.pick(object, ['a', 'c']);
+console.log(result); // => { 'a': 1, 'c': 3 }
+
+var object = { 'a': 1, 'b': '2', 'c': 3 };
+var result = _.pickBy(object, _.isNumber);
+console.log(result); // => { 'a': 1, 'c': 3 }
+
+
+var object = { 'a': [{ 'b': { 'c': 3 } }] };
+_.set(object, 'a[0].b.c', 4);
+console.log(object.a[0].b.c); // => 4
+_.set(object, ['x', '0', 'y', 'z'], 5);
+console.log(object.x[0].y.z); // => 5
+console.log(object); // { a: [ { b: [Object] } ], x: [ { y: [Object] } ] }
+
+
+var object = { 'a': [{ 'b': { 'c': 7 } }] };
+_.unset(object, 'a[0].b.c'); // => true
+console.log(object); // => { 'a': [{ 'b': {} }] };
+_.unset(object, ['a', '0', 'b', 'c']); // => true
+console.log(object); // => { 'a': [{ 'b': {} }] };
+
+
+function Foo() {
+  this.a = 1;
+  this.b = 2;
+}
+ 
+Foo.prototype.c = 3;
+ 
+var result = _.values(new Foo);
+console.log(result); // => [1, 2] (iteration order is not guaranteed)
+ 
+var result = _.values('hi');
+console.log(result); // => ['h', 'i']
+
+var result = _.values({ 'a': 1, 'b': '2', 'c': 3 });
+console.log(result); // => [ 1, '2', 3 ]
+
+
+console.log("\n# STRING\n");
+
+_.camelCase('Foo Bar');
+// => 'fooBar'
+ 
+_.camelCase('--foo-bar--');
+// => 'fooBar'
+ 
+_.camelCase('__FOO_BAR__');
+// => 'fooBar'
+
+
+_.padStart('abc', 6);
+// => '   abc'
+ 
+_.padStart('abc', 6, '_-');
+// => '_-_abc'
+ 
+_.padStart('abc', 3);
+// => 'abc'
+
+
+console.log("\n# UTIL\n");
+
+_.range(4);
+// => [0, 1, 2, 3]
+ 
+_.range(-4);
+// => [0, -1, -2, -3]
+ 
+_.range(1, 5);
+// => [1, 2, 3, 4]
+ 
+_.range(0, 20, 5);
+// => [0, 5, 10, 15]
+ 
+_.range(0, -4, -1);
+// => [0, -1, -2, -3]
+ 
+_.range(1, 4, 0);
+// => [1, 1, 1]
+ 
+_.range(0);
+// => []
