@@ -2,6 +2,7 @@
 // http://bluebirdjs.com/docs/working-with-callbacks.html
 // https://developers.google.com/web/fundamentals/getting-started/primers/promises
 // http://bluebirdjs.com/docs/api-reference.html
+// http://stackoverflow.com/questions/29268569/what-is-the-correct-terminology-for-javascript-promises
 
 
 // The Promise object is used for asynchronous computations. A Promise 
