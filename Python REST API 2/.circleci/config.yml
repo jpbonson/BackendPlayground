@@ -1,0 +1,38 @@
+version: 2
+jobs:
+  build:
+    working_directory: ~/work-at-olist
+    docker:
+      - image: circleci/python:3.5
+
+      - image: circleci/postgres:9.6.2
+        environment:
+          POSTGRES_USER: admin
+          POSTGRES_DB: call_records_api
+
+    steps:
+      - checkout
+      - restore_cache:
+          key: deps1-{{ .Branch }}-{{ checksum "Pipfile.lock" }}
+      - run:
+          command: |
+            sudo apt-get update; sudo apt-get install python-dev python-pip libxml2-dev libxslt1-dev zlib1g-dev libffi-dev libssl-dev python3 python3-dev libpq-dev postgresql postgresql-contrib nginx
+      - run:
+          command: |
+            sudo pip install pipenv
+      - run:
+          command: |
+            python3 -m venv venv
+            . venv/bin/activate
+            pipenv install
+      - save_cache:
+          key: deps1-{{ .Branch }}-{{ checksum "Pipfile.lock" }}
+          paths:
+            - "venv"
+      - run:
+          command: |
+            . venv/bin/activate
+            cd call_records_api; python manage.py test; cd ..
+      - store_artifacts:
+          path: test-reports/
+          destination: tr1

@@ -1,0 +1,1 @@
+web: cd call_records_api; ENV_NAME=prod gunicorn call_records_api.wsgi; cd ..
