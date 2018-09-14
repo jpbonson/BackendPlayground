@@ -1,77 +1,78 @@
 package main
 
 import (
-    "fmt"
-    "math"
-    "math/rand"
-    "time"
-    "math/cmplx"
+	"fmt"
+	"math"
+	"math/cmplx"
+	"math/rand"
+	"time"
 )
 
 var c, python, java bool
 
 var (
-    ToBe   bool       = false
-    MaxInt uint64     = 1<<64 - 1
-    z      complex128 = cmplx.Sqrt(-5 + 12i)
+	ToBe   bool       = false
+	MaxInt uint64     = 1<<64 - 1
+	z      complex128 = cmplx.Sqrt(-5 + 12i)
 )
 
 const Blah = 3.14
 
 func add(x int, y int) int {
-    return x + y
+	return x + y
 }
 
 func add2(x, y int) int {
-    return x + y
+	return x + y
 }
 
 func swap(x, y string) (string, string) {
-    return y, x
+	return y, x
 }
 
 func split(sum int) (x, y int) {
-    x = sum * 4 / 9
-    y = sum - x
-    return
+	x = sum * 4 / 9
+	y = sum - x
+	return
 }
 
 func main() {
-    fmt.Println("Welcome to the playground!")
+	fmt.Println("Welcome to the playground!")
 
-    fmt.Println("The time is", time.Now())
+	fmt.Println("The time is", time.Now())
 
-    fmt.Println("My favorite number is", rand.Intn(10))
+	fmt.Println("My favorite number is", rand.Intn(10))
 
-    fmt.Printf("Now you have %g problems.", math.Sqrt(7))
+	fmt.Printf("Now you have %g problems.\n", math.Sqrt(7))
 
-    fmt.Println(math.Pi)
+	fmt.Println("math.Pi ", math.Pi)
 
-    fmt.Println(add(42, 13))
+	fmt.Println("add(42, 13) ", add(42, 13))
 
-    fmt.Println(add2(42, 13))
+	fmt.Println("add2(42, 13) ", add2(42, 13))
 
-    a, b := swap("hello", "world")
-    fmt.Println(a, b)
+	a, b := swap("hello", "world")
+	fmt.Println("swap('hello', 'world') ", a, b)
 
-    fmt.Println(split(17))
+	x, y := split(17)
+	fmt.Println("split(17) ", x, y)
 
-    fmt.Println(c, python, java)
+	fmt.Println("bool initialized global vars ", c, python, java)
 
-    var i, j int = 1, 2
-    var q, w = true, "no!"
-    k := 3
-    fmt.Println(i, j, q, w, k)
+	var i, j int = 1, 2
+	var q, w = true, "no!"
+	k := 3
+	fmt.Println("local vars ", i, j, q, w, k)
 
-    fmt.Printf("Type: %T Value: %v\n", ToBe, ToBe)
-    fmt.Printf("Type: %T Value: %v\n", MaxInt, MaxInt)
-    fmt.Printf("Type: %T Value: %v\n", z, z)
+	fmt.Printf("Type: %T Value: %v\n", ToBe, ToBe)
+	fmt.Printf("Type: %T Value: %v\n", MaxInt, MaxInt)
+	fmt.Printf("Type: %T Value: %v\n", z, z)
 
-    i = 42
-    l := float64(i)
-    fmt.Println(i, l)
+	i = 42
+	l := float64(i)
+	fmt.Println("conversão de números ", i, l)
 
-    fmt.Println("Happy", Blah, "Day")
+	fmt.Println("Happy", Blah, "Day")
 }
 
 // PACKAGES
