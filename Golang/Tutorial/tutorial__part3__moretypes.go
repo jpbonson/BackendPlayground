@@ -88,6 +88,38 @@ func testSlices() {
     fmt.Println("names: ", names)
 }
 
+func testSlices2() {
+    // This is an array literal:
+    array := [3]bool{true, true, false}
+    fmt.Println("array: ", array)
+    // And this creates the same array as above, then builds a slice that references it:
+    slice := []bool{true, true, false}
+    fmt.Println("slice: ", slice)
+
+    s := []struct {
+        i int
+        b bool
+    }{
+        {2, true},
+        {3, false},
+        {5, true},
+        {7, true},
+        {11, false},
+        {13, true},
+    }
+    fmt.Println("slice struct: ", s)
+}
+
+func testSliceDefaults() {
+    a := []int{2, 3, 5, 7, 11}
+
+    // these slice expressions are equivalent:
+    fmt.Println("a[0:5]: ", a[0:5])
+    fmt.Println("a[:5]: ", a[:5])
+    fmt.Println("a[0:]: ", a[0:])
+    fmt.Println("a[:]: ", a[:])
+}
+
 func main() {
     fmt.Println("Welcome to the playground, part 3!")
 
@@ -96,6 +128,8 @@ func main() {
     fmt.Println("vertex vars: ", v1, v2, v3, p)
     testArray()
     testSlices()
+    testSlices2()
+    testSliceDefaults()
 }
 
 // An array's length is part of its type, so arrays cannot be resized. This seems limiting, but don't worry; Go provides a convenient way of working with arrays.
@@ -107,4 +141,4 @@ func main() {
 // Other slices that share the same underlying array will see those changes.
 
 
-// https://tour.golang.org/moretypes/9
+// https://tour.golang.org/moretypes/11
