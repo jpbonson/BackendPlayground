@@ -2,6 +2,7 @@ package main
 
 import (
 	"fmt"
+    "math"
     "strings"
 )
 
@@ -273,6 +274,83 @@ func testMap() {
     }
     fmt.Println(m["Bell Labs"])
     fmt.Println(m)
+
+    var n = map[string]Vertex{
+        "Bell Labs": Vertex{
+            40.68433, -74.39967,
+        },
+        "Google": Vertex{
+            37.42202, -122.08408,
+        },
+    }
+    fmt.Println(n)
+
+    var w = map[string]Vertex{
+        "Bell Labs": {40.68433, -74.39967},
+        "Google":    {37.42202, -122.08408},
+    }
+    fmt.Println(w)
+}
+
+func testMutateMap() {
+    fmt.Println("\ntestMutateMap()")
+
+    m := make(map[string]int)
+
+    v, ok := m["Answer"]
+    fmt.Println("The value:", v, "Present?", ok)
+
+    m["Answer"] = 42
+    fmt.Println("The value:", m["Answer"])
+
+    v, ok = m["Answer"]
+    fmt.Println("The value:", v, "Present?", ok)
+
+    m["Answer"] = 48
+    fmt.Println("The value:", m["Answer"])
+
+    delete(m, "Answer")
+    v, ok = m["Answer"]
+    fmt.Println("The value:", v, "Present?", ok)
+}
+
+func compute(fn func(float64, float64) float64) float64 {
+    return fn(3, 4)
+}
+
+func testFunctionParameter() {
+    fmt.Println("\ntestFunctionParameter()")
+
+    hypot := func(x, y float64) float64 {
+        return math.Sqrt(x*x + y*y)
+    }
+    fmt.Println(hypot(3, 4))
+
+    fmt.Println(compute(hypot))
+    fmt.Println(compute(math.Pow))
+}
+
+func adder() func(int) int {
+    sum := 0
+    return func(x int) int {
+        sum += x
+        return sum
+    }
+}
+
+func testClosure() {
+    // Go functions may be closures. A closure is a function value that references variables from outside its body. The function may access and assign to the referenced variables; in this sense the function is "bound" to the variables.
+    // For example, the adder function returns a closure. Each closure is bound to its own sum variable.
+
+    fmt.Println("\ntestClosure()")
+
+    pos, neg := adder(), adder()
+    for i := 0; i < 10; i++ {
+        fmt.Println(
+            pos(i),
+            neg(-1*i),
+        )
+    }
 }
 
 func main() {
@@ -291,6 +369,7 @@ func main() {
     testAppend()
     testIterateSlice()
     testMap()
+    testMutateMap()
+    testFunctionParameter()
+    testClosure()
 }
-
-// https://tour.golang.org/moretypes/19
