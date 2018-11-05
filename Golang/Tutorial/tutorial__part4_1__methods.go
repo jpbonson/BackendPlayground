@@ -70,5 +70,3 @@ func main() {
     // The second is to avoid copying the value on each method call. This can be more efficient if the receiver is a large struct, for example.
     // In general, all methods on a given type should have either value or pointer receivers, but not a mixture of both.
 }
-
-// https://tour.golang.org/methods/9
