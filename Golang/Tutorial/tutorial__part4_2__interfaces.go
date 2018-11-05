@@ -31,6 +31,8 @@ func main() {
     testInterfaces()
     testTypeAssertion()
     testSwitchType()
+    testStringerInterface()
+    testStringerInterface2()
 }
 
 func describe(i I) {
@@ -127,4 +129,44 @@ func do(i interface{}) {
     }
 }
 
-// https://tour.golang.org/methods/17
+type Person struct {
+    Name string
+    Age  int
+}
+
+func (p Person) String() string {
+    return fmt.Sprintf("%v (%v years)", p.Name, p.Age)
+}
+
+// type Stringer interface {
+//     String() string
+// }
+
+func testStringerInterface() {
+    // A Stringer is a type that can describe itself as a string. The fmt package (and many others) look for this interface to print values.
+
+    fmt.Println("\ntestStringerInterface()")
+    a := Person{"Arthur Dent", 42}
+    z := Person{"Zaphod Beeblebrox", 9001}
+    fmt.Println(a, z)
+}
+
+type IPAddr [4]byte
+
+func (a IPAddr) String() string {
+    return fmt.Sprintf("%v.%v.%v.%v", a[0], a[1], a[2], a[3])
+}
+
+func testStringerInterface2() {
+    fmt.Println("\ntestStringerInterface2()")
+
+    hosts := map[string]IPAddr{
+        "loopback":  {127, 0, 0, 1},
+        "googleDNS": {8, 8, 8, 8},
+    }
+    for name, ip := range hosts {
+        fmt.Printf("%v: %v\n", name, ip)
+    }
+}
+
+// https://tour.golang.org/methods/19
