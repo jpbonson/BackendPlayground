@@ -5,6 +5,14 @@ import (
     "math"
 )
 
+func main() {
+    testInterfaces()
+    testTypeAssertion()
+    testSwitchType()
+    testStringerInterface()
+    testStringerInterface2()
+}
+
 type I interface {
     M()
 }
@@ -25,14 +33,6 @@ type F float64
 
 func (f F) M() {
     fmt.Println(f)
-}
-
-func main() {
-    testInterfaces()
-    testTypeAssertion()
-    testSwitchType()
-    testStringerInterface()
-    testStringerInterface2()
 }
 
 func describe(i I) {
