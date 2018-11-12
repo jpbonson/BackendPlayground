@@ -2,7 +2,11 @@ package main
 
 import (
     "fmt"
+    "image"
+    "io"
     "math"
+    "strconv"
+    "strings"
 )
 
 func main() {
@@ -11,6 +15,9 @@ func main() {
     testSwitchType()
     testStringerInterface()
     testStringerInterface2()
+    testError()
+    testReader()
+    testImage()
 }
 
 type I interface {
@@ -169,4 +176,33 @@ func testStringerInterface2() {
     }
 }
 
-// https://tour.golang.org/methods/19
+func testError() error {
+    i, err := strconv.Atoi("42")
+    if err != nil {
+        fmt.Printf("couldn't convert number: %v\n", err)
+        return nil
+    }
+    fmt.Println("Converted integer:", i)
+
+    return nil
+}
+
+func testReader() {
+    r := strings.NewReader("Hello, Reader!")
+
+    b := make([]byte, 8)
+    for {
+        n, err := r.Read(b)
+        fmt.Printf("n = %v err = %v b = %v\n", n, err, b)
+        fmt.Printf("b[:n] = %q\n", b[:n])
+        if err == io.EOF {
+            break
+        }
+    }
+}
+
+func testImage() {
+    m := image.NewRGBA(image.Rect(0, 0, 100, 100))
+    fmt.Println(m.Bounds())
+    fmt.Println(m.At(0, 0).RGBA())
+}
